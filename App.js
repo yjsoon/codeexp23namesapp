@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
 
 const names = [
   "Aaran",
@@ -2742,13 +2742,22 @@ const names = [
   "Zuriel"
 ];
 
+const namesAsObjects = names.map((name, index) => {
+  return {
+    name,
+    id: index
+  };
+});
+
 export default function App() {
+  const rowRenderer = ({ item }) => <Text>{item.name}</Text>;
+
   return (
-    <ScrollView style={styles.container}>
-      {names.map((name, index) => (
-        <Text key={index}>{name}</Text>
-      ))}
-    </ScrollView>
+    <FlatList
+      data={namesAsObjects}
+      keyExtractor={(item) => item.id}
+      renderItem={rowRenderer}
+    />
   );
 }
 
